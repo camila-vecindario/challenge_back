@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_03_035558) do
+ActiveRecord::Schema.define(version: 2021_03_05_130207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,37 +23,44 @@ ActiveRecord::Schema.define(version: 2021_03_03_035558) do
   end
 
   create_table "price_histories", force: :cascade do |t|
-    t.date "start_date", null: false
-    t.date "end_date", null: false
     t.decimal "value", null: false
+    t.bigint "project_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_price_histories_on_project_id"
+  end
+
+  create_table "project_accesses", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "project_id", null: false
+    t.boolean "is_owner", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_project_accesses_on_project_id"
+    t.index ["user_id"], name: "index_project_accesses_on_user_id"
+  end
+
+  create_table "project_leads", id: false, force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "project_id", null: false
+    t.index ["project_id", "user_id"], name: "index_project_leads_on_project_id_and_user_id"
+    t.index ["user_id", "project_id"], name: "index_project_leads_on_user_id_and_project_id"
   end
 
   create_table "projects", force: :cascade do |t|
     t.string "name", null: false
-    t.string "type", limit: 1, null: false
-    t.string "address"
-    t.boolean "has_vis"
-    t.integer "private_areas"
-    t.integer "public_areas"
-    t.integer "bathrooms"
-    t.boolean "has_parking"
+    t.integer "type_project", default: 0, null: false
+    t.string "address", null: false
+    t.boolean "has_vis", default: false, null: false
+    t.float "private_area", null: false
+    t.float "built_area", null: false
+    t.integer "bathrooms", default: 1, null: false
+    t.boolean "has_parking", default: false, null: false
     t.string "sales_room_emails", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "price_id"
-    t.integer "owner_id", null: false
     t.bigint "location_id"
     t.index ["location_id"], name: "index_projects_on_location_id"
-    t.index ["price_id"], name: "index_projects_on_price_id"
-  end
-
-  create_table "projects_users", id: false, force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "project_id", null: false
-    t.index ["project_id", "user_id"], name: "index_projects_users_on_project_id_and_user_id"
-    t.index ["user_id", "project_id"], name: "index_projects_users_on_user_id_and_project_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -75,7 +82,8 @@ ActiveRecord::Schema.define(version: 2021_03_03_035558) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "price_histories", "projects"
+  add_foreign_key "project_accesses", "projects"
+  add_foreign_key "project_accesses", "users"
   add_foreign_key "projects", "locations"
-  add_foreign_key "projects", "price_histories", column: "price_id"
-  add_foreign_key "projects", "users", column: "owner_id"
 end
