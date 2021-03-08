@@ -41,4 +41,14 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # env management
-gem "figaro", "~> 1.2.0"
+gem 'figaro', '~> 1.2.0'
+
+gem 'devise'
+
+gem 'rolify'
+
+gem 'cancancan'
+
+gem 'jwt'
+
+gem 'rack-cors'

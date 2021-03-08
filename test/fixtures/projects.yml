@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  type: 
+  address: MyString
+  price: 1
+  vis: false
+  private_areas: 
+  public_areas: 
+  bathrooms: 
+  parking: false
+  sales_room_emails: MyString
+  cover: MyString
+  owner: 
+
+two:
+  name: MyString
+  type: 
+  address: MyString
+  price: 1
+  vis: false
+  private_areas: 
+  public_areas: 
+  bathrooms: 
+  parking: false
+  sales_room_emails: MyString
+  cover: MyString
+  owner: 
