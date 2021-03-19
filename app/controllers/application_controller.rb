@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::API
+  before_action :authorize_req
+
   SECRET_KEY = Rails.application.secrets.secret_key_base. to_s
 
   def not_found
@@ -20,6 +22,7 @@ class ApplicationController < ActionController::API
     header = header.split(' ').last if header
     begin
       @decoded = decode(header)
+      print "#{@decoded}"
       @current_user = User.find(@decoded[:user_id])
     rescue ActiveRecord::RecordNotFound => e
       render json: { errors: e.message }, status: :unauthorized

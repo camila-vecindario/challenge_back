@@ -6,8 +6,10 @@ class UsersController < ApplicationController
     render json: @users, status: :ok
   end
 
-  def find_user
-    put "Find user #{params[:userId]}"
+  def find
+    user = User.find(params[:userId])
+    print "Find user #{user}"
+    render json: user, status: :ok
   end
 
   def user_params
