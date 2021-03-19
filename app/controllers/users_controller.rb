@@ -6,6 +6,10 @@ class UsersController < ApplicationController
     render json: @users, status: :ok
   end
 
+  def find_user
+    put "Find user #{params[:userId]}"
+  end
+
   def user_params
     params.permit(:first_name, :last_name, :email, :password, :password_confirmation, :phone)
   end

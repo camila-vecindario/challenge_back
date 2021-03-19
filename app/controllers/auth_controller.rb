@@ -5,7 +5,7 @@ class AuthController < ApplicationController
 
   def login
     user = User.find_by_email(login_params[:email])
-
+    p login_params
     if !user
       return render json: { errors: 'Usuario no encontrado.' }, status: :unauthorized
     end

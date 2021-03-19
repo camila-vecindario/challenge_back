@@ -24,6 +24,11 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
+    active_model_serializers (0.10.12)
+      actionpack (>= 4.1, < 6.2)
+      activemodel (>= 4.1, < 6.2)
+      case_transform (>= 0.2)
+      jsonapi-renderer (>= 0.1.1.beta1, < 0.3)
     activejob (5.2.4.5)
       activesupport (= 5.2.4.5)
       globalid (>= 0.3.6)
@@ -49,6 +54,8 @@ GEM
     builder (3.2.4)
     byebug (11.0.1)
     cancancan (3.2.1)
+    case_transform (0.2)
+      activesupport
     concurrent-ruby (1.1.8)
     crass (1.0.6)
     devise (4.7.3)
@@ -64,6 +71,7 @@ GEM
       activesupport (>= 4.2.0)
     i18n (1.8.9)
       concurrent-ruby (~> 1.0)
+    jsonapi-renderer (0.2.2)
     jwt (2.2.2)
     loofah (2.9.0)
       crass (~> 1.0.2)
@@ -141,6 +149,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  active_model_serializers
   bootsnap (>= 1.1.0)
   byebug
   cancancan
@@ -158,4 +167,4 @@ RUBY VERSION
    ruby 2.3.3p222
 
 BUNDLED WITH
-   2.2.7
+   2.2.14
