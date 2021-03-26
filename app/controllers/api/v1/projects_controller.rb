@@ -34,7 +34,7 @@ class Api::V1::ProjectsController < ApplicationController
   end
 
   def list
-    if search_params[:type]
+    unless search_params[:type]
       render json: Project.all.order(:created_at), status: :ok
     end
     projects = Project.where("type_project = ?", search_params[:type]).order(:created_at)
