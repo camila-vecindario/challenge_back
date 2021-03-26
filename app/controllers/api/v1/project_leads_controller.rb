@@ -1,17 +1,11 @@
-class ProjectLeadsController < ApplicationController
-
-  DEFAULT_PASS = "WQ123@45"
+class Api::V1::ProjectLeadsController < ApplicationController
 
   def create
     user = User.find_by_email([leads_params[:email]])
 
     unless user
-      user = User.new
-      user.email = leads_params[:email]
-      user.phone = leads_params[:phone]
-      user.password = DEFAULT_PASS
-      user.first_name = leads_params[:first_name]
-      user.last_name = leads_params[:last_name]
+      user = User.new(:leads_params)
+      user.password = Devise.friendly_token[0, 20]
 
       unless user.save!
         render json: { errors: user.errors.full_message }, status: :unprocessable_entity
@@ -24,12 +18,13 @@ class ProjectLeadsController < ApplicationController
       render json: { errors: lead.errors.full_message }, status: :unprocessable_entity
     end
 
+    LeadsMailer.send_lead_email(Project.find(params[:projectId]), user)
     render json: lead, status: :ok
   end
 
-  # TODO list project leads by Id
   def list
-    puts "List project #{params[:projectId]} leads"
+    project = Project.find(params[:projectId])
+    render json: project.leads, status: :ok
   end
 
   def leads_params

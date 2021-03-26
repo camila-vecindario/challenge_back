@@ -1,4 +1,11 @@
-class ProjectsController < ApplicationController
+class Api::V1::ProjectsController < ApplicationController
+  skip_before_action  :authorize_req, only: [:list]
+  before_action :set_project
+  rescue_from ActiveRecord::RecordNotFound, with: :handle_project_not_found
+
+  def set_project
+    @project = Project.find(params[:projectId])
+  end
 
   def create
     project = Project.new(project_params)
@@ -22,25 +29,25 @@ class ProjectsController < ApplicationController
     render json: { project: project, price: price, access: project_access }, status: :ok
   end
 
-  # TODO update partially project
   def update
-    project = Project.find(params[:projectId])
-    puts "Vamo' a actualizar #{project.name}"
+    @project.attributes = project_params[:project]
   end
 
   def list
-    projects = Project.all
+    if search_params[:type]
+      render json: Project.all.order(:created_at), status: :ok
+    end
+    projects = Project.where("type_project = ?", search_params[:type]).order(:created_at)
     render json: projects, status: :ok
   end
 
   def find
-    project = Project.find(params[:projectId])
-    render json: project, status: :ok
+    render json: @project, status: :ok
   end
 
-  # TODO search project by slug
   def search
-    puts "Search project"
+    projects = Project.where(name: search_params[:name])
+    render json: projects, status: :ok
   end
 
   def project_params
@@ -53,4 +60,11 @@ class ProjectsController < ApplicationController
     params.require(:project).permit(:price)
   end
 
+  def search_params
+    params.permit(:type, :name)
+  end
+
+  def handle_project_not_found
+    render json: { errors: "project record not found" }, status: :not_found
+  end
 end
