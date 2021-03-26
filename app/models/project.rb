@@ -8,4 +8,6 @@ class Project < ApplicationRecord
   belongs_to  :location
   has_and_belongs_to_many :users
   has_and_belongs_to_many :project_leads, join_table: 'project_leads', class_name: 'User'
+  has_many  :allowed_users, :through => :project_access, source: :user
+  has_many  :leads, :through => :project_leads, source: :user
 end

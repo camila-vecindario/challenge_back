@@ -1,4 +1,4 @@
-class AuthController < ApplicationController
+class Api::V1::AuthController < ApplicationController
   before_action :authorize_req, except: :login
 
   SECRET_KEY = Rails.application.secrets.secret_key_base. to_s

@@ -9,6 +9,8 @@ class User < ApplicationRecord
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   has_one_attached  :picture
-  has_and_belongs_to_many :projects
-  has_and_belongs_to_many  :project_leads, join_table: 'project_leads', class_name: 'Project'
+  has_many  :projects_access
+  has_many  :projects, :through => :projects_access, :source => :project
+  has_many  :project_leads
+  has_many  :leads, :through => :project_leads, :source => :project
 end
