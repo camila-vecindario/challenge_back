@@ -1,6 +1,7 @@
 class Api::V1::ProjectsController < ApplicationController
-  skip_before_action  :authorize_req, only: [:list]
   before_action :set_project
+  skip_before_action  :authorize_req, only: [:list]
+  skip_before_action  :set_project, only: [:list]
   rescue_from ActiveRecord::RecordNotFound, with: :handle_project_not_found
 
   def set_project
@@ -34,11 +35,11 @@ class Api::V1::ProjectsController < ApplicationController
   end
 
   def list
-    unless search_params[:type]
-      render json: Project.all.order(:created_at), status: :ok
+    projects = Project.all.order(:created_at)
+    if search_params[:type]
+      projects = Project.where("type_project = ?", search_params[:type]).order(:created_at)
     end
-    projects = Project.where("type_project = ?", search_params[:type]).order(:created_at)
-    render json: projects, status: :ok
+    render json: projects.to_json(include: [:location]), status: :ok
   end
 
   def find
