@@ -36,7 +36,7 @@ class Api::V1::ProjectsController < ApplicationController
   def list
     projects = Project.all.order(:created_at)
     if search_params[:type]
-      projects = Project.where("type_project = ?", search_params[:type]).order(:created_at)
+      projects = projects.where("type_project = ?", search_params[:type]).order(:created_at)
     end
     render json: projects.to_json(include: [:location]), status: :ok
   end
