@@ -16,7 +16,7 @@ class Api::V1::AuthController < ApplicationController
 
     token = encode({ user_id: user.id })
 
-    render json: { auth_token: token }, status: :ok
+    render json: { auth_token: token, user: user.as_json(methods: :isAdmin, except: [:id, :created_at, :updated_at]) }, status: :ok
   end
 
   def login_params

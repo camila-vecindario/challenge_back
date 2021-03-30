@@ -43,11 +43,11 @@ class Api::V1::ProjectsController < ApplicationController
 
   def find
     p @project
-    render json: @project, status: :ok
+    render json: @project.as_json(include: :location), status: :ok
   end
 
   def search
-    projects = Project.where(name: search_params[:name])
+    projects = Project.where("name = ?", search_params[:name])
     render json: projects, status: :ok
   end
 

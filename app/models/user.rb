@@ -13,4 +13,8 @@ class User < ApplicationRecord
   has_many  :projects, :through => :projects_access, :source => :project
   has_many  :project_leads
   has_many  :leads, :through => :project_leads, :source => :project
+
+  def isAdmin
+    return self.has_role? :admin
+  end
 end
