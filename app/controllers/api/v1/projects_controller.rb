@@ -43,6 +43,7 @@ class Api::V1::ProjectsController < ApplicationController
   end
 
   def find
+    p @project
     render json: @project, status: :ok
   end
 

@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'vecindario.challenge@vecindario.com'
+  default from: 'camila.herrera@vecindario.com'
   layout 'mailer'
 end

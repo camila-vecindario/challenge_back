@@ -1,12 +1,12 @@
 class Api::V1::ProjectLeadsController < ApplicationController
+  skip_before_action  :authorize_req, only: [:create]
 
   def create
     user = User.find_by_email([leads_params[:email]])
 
     unless user
-      user = User.new(:leads_params)
+      user = User.new(leads_params)
       user.password = Devise.friendly_token[0, 20]
-
       unless user.save!
         render json: { errors: user.errors.full_message }, status: :unprocessable_entity
       end
@@ -18,7 +18,7 @@ class Api::V1::ProjectLeadsController < ApplicationController
       render json: { errors: lead.errors.full_message }, status: :unprocessable_entity
     end
 
-    LeadsMailer.send_lead_email(Project.find(params[:projectId]), user)
+    LeadsMailer.send_lead_email(Project.find(params[:projectId]), user).deliver
     render json: lead, status: :ok
   end
 

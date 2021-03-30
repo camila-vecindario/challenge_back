@@ -5,10 +5,7 @@ class LeadsMailer < ApplicationMailer
     @user = user
     addresses = project.sales_room_emails.split(',')
     addresses.each do |n|
-      mail({
-             to: n,
-             subject: 'Se están fijando en tu proyecto'
-           })
+      mail(:to => n, :subject => 'Se están fijando en tu proyecto')
     end
   end
 
