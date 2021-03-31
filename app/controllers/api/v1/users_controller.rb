@@ -24,6 +24,6 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def handle_user_not_found
-    render json: { error: "User record not found" }, status: :not_found
+    render json: { errors: "User record not found" }, status: :not_found
   end
 end

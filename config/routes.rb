@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       post '/auth/login', to: 'auth#login'
+      post '/users', to: 'auth#create'
       get '/users', to: 'users#index'
       get '/users/:userId', to: 'users#find'
       get '/users/:userId/projects', to: 'users#find_projects'
