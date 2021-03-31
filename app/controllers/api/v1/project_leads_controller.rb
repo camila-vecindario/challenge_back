@@ -12,7 +12,7 @@ class Api::V1::ProjectLeadsController < ApplicationController
       end
     end
 
-    lead = ProjectLeads.new(project_id: params[:projectId], user_id: user.id)
+    lead = ProjectLead.new(project_id: params[:projectId], user_id: user.id)
 
     unless lead.save!
       render json: { errors: lead.errors.full_message }, status: :unprocessable_entity

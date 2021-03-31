@@ -6,8 +6,8 @@ class Project < ApplicationRecord
   has_one_attached  :cover
   has_many    :price_histories, dependent:  :destroy
   belongs_to  :location
-  has_and_belongs_to_many :users
-  has_and_belongs_to_many :project_leads, join_table: 'project_leads', class_name: 'User'
-  has_many  :allowed_users, :through => :project_access, source: :user
-  has_many  :leads, :through => :project_leads, source: :user
+  has_many  :project_accesses
+  has_many  :project_leads
+  has_many  :allowed_users, through: :project_accesses, source: :user
+  has_many  :leads, through: :project_leads, source: :user
 end

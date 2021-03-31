@@ -1,5 +1,5 @@
 class Api::V1::ProjectsController < ApplicationController
-  before_action :set_project, except: [:list]
+  before_action :set_project, except: [:list, :create]
   skip_before_action  :authorize_req, only: [:list]
   rescue_from ActiveRecord::RecordNotFound, with: :handle_project_not_found
 

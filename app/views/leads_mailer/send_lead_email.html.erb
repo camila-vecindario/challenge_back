@@ -1,8 +1,12 @@
 <div class="email">
   <img class="banner" src="https://viewinmobiliario2.s3-sa-east-1.amazonaws.com/presente/Auth/creacion-cuenta.png" alt="" />
-  <div class="img-wrapper">
-    <img class="main-img" src="https://viewinmobiliario2.s3-sa-east-1.amazonaws.com/static_assets/emails/assessor_notify/banner-no-registrado.png" />
-  </div>
+  <table style="width: 100%">
+    <tr>
+      <td style="text-align: center;">
+        <img src="https://viewinmobiliario2.s3-sa-east-1.amazonaws.com/static_assets/emails/assessor_notify/banner-no-registrado.png" />
+      </td>
+    </tr>
+  </table>
   <h2>Hola Equipo <span class="highlighted-text"><%= @project.name %></span>,</h2>
   <p class="content">
     <span class="highlighted-text"><%= @user.first_name %> <%= @user.last_name %></span> es un usuario Vecindario
