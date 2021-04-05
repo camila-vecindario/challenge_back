@@ -38,17 +38,11 @@ class Api::V1::ProjectsController < ApplicationController
     if search_params[:type]
       projects = projects.where("type_project = ?", search_params[:type]).order(:created_at)
     end
-    render json: projects.to_json(include: [:location]), status: :ok
+    render json: projects.as_json(include: [:location], methods: :price), status: :ok
   end
 
   def find
-    p @project
-    render json: @project.as_json(include: :location), status: :ok
-  end
-
-  def search
-    projects = Project.where("name = ?", search_params[:name])
-    render json: projects, status: :ok
+    render json: @project.as_json(include: :location, methods: :price), status: :ok
   end
 
   def project_params
@@ -62,7 +56,7 @@ class Api::V1::ProjectsController < ApplicationController
   end
 
   def search_params
-    params.permit(:type, :name)
+    params.permit(:type)
   end
 
   def handle_project_not_found

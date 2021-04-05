@@ -55,3 +55,5 @@ gem 'jwt'
 gem 'active_model_serializers'
 
 gem "aws-sdk-s3"
+
+gem 'pg_search'

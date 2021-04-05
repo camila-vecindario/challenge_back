@@ -9,12 +9,16 @@ class User < ApplicationRecord
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   has_one_attached  :picture
-  has_many  :projects_access
-  has_many  :projects, :through => :projects_access, :source => :project
+  has_many  :project_accesses
+  has_many  :projects, through: :project_accesses, source: :project
   has_many  :project_leads
-  has_many  :leads, through: :project_leads, :source => :project
+  has_many  :leads, through: :project_leads, source: :project
 
   def isAdmin
     return self.has_role? :admin
+  end
+
+  def own_projects
+    return self.projects
   end
 end
